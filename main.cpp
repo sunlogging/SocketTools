@@ -70,8 +70,7 @@ int main(int argc, char* argv[]) {
         }
         else if (command == "-script_dll") {
 
-            typedef void(__cdecl* FN_CALL)(int, char*);
-            HMODULE hdll;
+            typedef void(__cdecl* FN_CALL)(int, char* []);
             FN_CALL Func;
 
             HINSTANCE dll = LoadLibrary(convertCharArrayToLPCWSTR(argv[index + 1])); //searth dll file
@@ -80,7 +79,7 @@ int main(int argc, char* argv[]) {
             Func = (FN_CALL)GetProcAddress(dll, argv[index + 2]); // start dll searth funcs
             if (!Func) { std::cout << "Function " << argv[index + 2] << " not found!\n"; return -1; }
 
-            Func(argc, *argv); // searth and start func
+            Func(argc, argv); // searth and start func
 
             FreeLibrary(dll);
             return 0;
