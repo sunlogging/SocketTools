@@ -1,7 +1,6 @@
 #include <string>
 #include <iostream>
 #include <AccCtrl.h>
-
 #include <thread>
 
 #include "Sendler.h"
@@ -27,7 +26,7 @@ void send_tcp(std::string nameprocess, Settings settings)
 void send_udp(std::string nameprocess, Settings settings)
 {
     Socket socket;
-    for (int i = 0; i < settings.get_count();i++ ) {
+    for (int i = 0; i < settings.get_count(); i++) {
         socket.sendUDPPacket(settings.get_ip(), settings.get_port_udp());
     }
 }
@@ -71,7 +70,7 @@ int main(int argc, char* argv[]) {
         }
         else if (command == "-script_dll") {
 
-            typedef void(__cdecl* FN_CALL)(int);
+            typedef void(__cdecl* FN_CALL)(int, char*);
             HMODULE hdll;
             FN_CALL Func;
 
@@ -79,17 +78,16 @@ int main(int argc, char* argv[]) {
             if (dll == NULL) { std::cout << "Lib " << argv[index + 1] << " not found!\n"; return -1; }
 
             Func = (FN_CALL)GetProcAddress(dll, argv[index + 2]); // start dll searth funcs
-            if (!Func){ std::cout << "Function " << argv[index + 2] << " not found!\n"; return -1; }
+            if (!Func) { std::cout << "Function " << argv[index + 2] << " not found!\n"; return -1; }
 
-            
-            Func(1); // searth and start func
-            
+            Func(argc, *argv); // searth and start func
+
             FreeLibrary(dll);
             return 0;
         }
         else if (command == "-noweb") {
             ;
-        } 
+        }
 
     }
     if (settings.get_http().c_str()) {
@@ -110,8 +108,5 @@ int main(int argc, char* argv[]) {
 
     }
 
-
-
-    
     return 0;
 }
