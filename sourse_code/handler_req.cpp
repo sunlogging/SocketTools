@@ -1,22 +1,23 @@
-#include "Sendler.h"
-#include "Settings.h"
+#include "handler_req.h"
+#include "settings.h"
 
 #include <curl/curl.h>
 #pragma comment(lib, "ws2_32.lib")
+#pragma comment(lib, "libcurl.lib")
 #include <WinSock2.h>
 #include <iostream>
 
 
 void HTTP::sendHTTP(std::string target)
 {
-        CURL* curl;
-        curl = curl_easy_init();
+    CURL* curl;
+    curl = curl_easy_init();
 
-        curl_easy_setopt(curl, CURLOPT_URL, target.c_str());
-        curl_easy_setopt(curl, CURLOPT_NOBODY, 1);
+    curl_easy_setopt(curl, CURLOPT_URL, target.c_str());
+    curl_easy_setopt(curl, CURLOPT_NOBODY, 1);
 
-        curl_easy_perform(curl);
-        curl_easy_cleanup(curl);
+    curl_easy_perform(curl);
+    curl_easy_cleanup(curl);
 
 }
 

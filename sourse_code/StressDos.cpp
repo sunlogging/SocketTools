@@ -1,10 +1,10 @@
-#include <string>
+﻿#include <string>
 #include <iostream>
 #include <AccCtrl.h>
 #include <thread>
 
-#include "Sendler.h"
-#include "Settings.h"
+#include "handler_req.h"
+#include "settings.h"
 
 
 void send_http(std::string nameprocess, Settings settings)
@@ -89,6 +89,7 @@ int main(int argc, char* argv[]) {
         }
 
     }
+
     if (settings.get_http().c_str()) {
         std::thread http(send_http, "http", settings);
         http.join();
