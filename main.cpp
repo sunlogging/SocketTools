@@ -71,16 +71,20 @@ int main(int argc, char* argv[]) {
         }
         else if (command == "-script_dll") {
 
-            HINSTANCE le_module = LoadLibrary(convertCharArrayToLPCWSTR(argv[index + 1])); //searth dll file
-            if (le_module == NULL) { std::cout << "Lib " << argv[index + 1] << " not found!\n"; return 0;}
+            typedef void(__cdecl* FN_CALL)(int);
+            HMODULE hdll;
+            FN_CALL Func;
 
+            HINSTANCE dll = LoadLibrary(convertCharArrayToLPCWSTR(argv[index + 1])); //searth dll file
+            if (dll == NULL) { std::cout << "Lib " << argv[index + 1] << " not found!\n"; return -1; }
 
-            FARPROC func = GetProcAddress(le_module, (LPCSTR)&argv[index + 2]); // start dll searth funcs
+            Func = (FN_CALL)GetProcAddress(dll, argv[index + 2]); // start dll searth funcs
+            if (!Func){ std::cout << "Function " << argv[index + 2] << " not found!\n"; return -1; }
 
-            typedef void(__cdecl* p)(int, char*);
-            ((p)func)(argc, *argv); // searth and start func
-
-            FreeLibrary(le_module);
+            
+            Func(1); // searth and start func
+            
+            FreeLibrary(dll);
             return 0;
         }
         else if (command == "-noweb") {
