@@ -42,33 +42,6 @@ void Socket::sendUDPPacket(char* destIP, int destPort){
     std::cout << "\n" << resultSend << "\n" << WSAGetLastError() << "\n";
 
     closesocket(sock);
-    //int sockfd;
-    //struct sockaddr_in server_addr;
-
-    ////Create the socket
-    //sockfd = socket(AF_INET, SOCK_DGRAM,
-    //    IPPROTO_UDP);
-
-    ////configure settings in address struct
-    //server_addr.sin_family = AF_INET;
-    //server_addr.sin_port = htons(destPort);
-    //
-    //server_addr.sin_addr.s_addr = (ULONG)destIP; //IP address here
-    //
-    //
-    //memset(server_addr.sin_zero, '\0', sizeof server_addr.sin_zero);
-
-    ////Send UDP packet
-    //char buf[] = "Hello, World!";
-    //int len;
-    //len = strlen(buf) + 1;
-    //if (len > 0)
-    //{WSAGetLastError();
-    //   int res =  sendto(sockfd, buf, len, 0,
-    //        (struct sockaddr*)&server_addr,
-    //        sizeof(server_addr));
-    //    std::cout << WSAGetLastError() << " " << res;
-    //}
 }
 
 void Socket::sendTCPPacket(char* destIP, int destPort) {
