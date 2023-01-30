@@ -1,0 +1,1 @@
+start venv\Scripts\python.exe %CD%\server_tcp.py

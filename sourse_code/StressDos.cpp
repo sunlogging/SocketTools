@@ -27,6 +27,7 @@ void send_udp(std::string nameprocess, Settings settings)
 {
     Socket socket;
     for (int i = 0; i < settings.get_count(); i++) {
+        std::cout << "\nstart for\n";
         socket.sendUDPPacket(settings.get_ip(), settings.get_port_udp());
     }
 }
@@ -60,6 +61,7 @@ int main(int argc, char* argv[]) {
             index++;
         }
         else if (command == "-udp") {
+            std::cout << "\nupd\n";
             int port = std::stoi(argv[index + 1]);
             settings.set_port_udp(port);
             index++;
@@ -73,13 +75,13 @@ int main(int argc, char* argv[]) {
             typedef void(__cdecl* FN_CALL)(int, char* []);
             FN_CALL Func;
 
-            HINSTANCE dll = LoadLibrary(convertCharArrayToLPCWSTR(argv[index + 1])); //searth dll file
+            HINSTANCE dll = LoadLibrary(convertCharArrayToLPCWSTR(argv[index + 1])); // searth dll file
             if (dll == NULL) { std::cout << "Lib " << argv[index + 1] << " not found!\n"; return -1; }
 
-            Func = (FN_CALL)GetProcAddress(dll, argv[index + 2]); // start dll searth funcs
+            Func = (FN_CALL)GetProcAddress(dll, argv[index + 2]); // searth funcs in dll
             if (!Func) { std::cout << "Function " << argv[index + 2] << " not found!\n"; return -1; }
 
-            Func(argc, argv); // searth and start func
+            Func(argc, argv); // start func
 
             FreeLibrary(dll);
             return 0;
@@ -99,6 +101,7 @@ int main(int argc, char* argv[]) {
         if (settings.get_port_tcp()) {
 
             std::thread tcp(send_tcp, "udp", settings);
+            std::cout << "\nudp has been start\n";
             tcp.join();
         }
         if (settings.get_port_udp()) {

@@ -2,8 +2,8 @@
 #include <iostream>
 
 #define THREAD_LEN 1
-#define TCPSIZE 60
-#define UDPSIZE 65535 
+#define TCPSIZE 3000
+#define UDPSIZE 100 
 
 
 class Settings {
